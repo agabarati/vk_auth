@@ -1,40 +1,104 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.android.application'
 
-buildscript {
-    ext.kotlin_version = '1.3.72'
-    ext.anko_version='0.10.8'
-    repositories {
-        google()
-        jcenter()
-        mavenCentral()
-        
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 31
+    defaultConfig {
+        applicationId "com.ironapp.millionare"
+        minSdkVersion 18
+        targetSdkVersion 31
+        versionCode 38
+        versionName "2.1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.3'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-        classpath 'com.google.gms:google-services:4.3.10'
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
 
+    dataBinding {
+        enabled true
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        mavenCentral()
-    }
+dependencies {
+    //def room_version = "2.1.0-alpha04"
+    def room_version = "2.4.2"
+    def lifecycle_version = "2.0.0"
+    def appcompat_version = '1.1.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21"
+    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    // For loading and tinting drawables on older versions of the platform
+    implementation "androidx.appcompat:appcompat-resources:$appcompat_version"
+    implementation "androidx.core:core-ktx:1.7.0"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //def room_version = "2.1.0-alpha04"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    //annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "org.jetbrains.anko:anko-commons:0.10.8"
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    // Android KTX
+    //implementation 'androidx.core:core-ktx:1.0.0-beta01'
+
+    // Anko Commons
+
+    implementation 'com.google.firebase:firebase-analytics:20.1.2'
+    implementation 'com.google.firebase:firebase-database:20.0.4'
+    implementation 'com.google.firebase:firebase-auth:21.0.3'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.firebase:firebase-firestore:24.1.1'
+
+    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
+
+    implementation 'com.shobhitpuri.custombuttons:google-signin:1.1.0'
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.vk:android-sdk-core:3.5.2'
+    implementation 'com.vk:android-sdk-api:3.5.2'
 }
 
-ext {
-    // The following are only a few examples of the types of properties you can define.
-    compileSdkVersion = 29
-    // You can also create properties to specify versions for dependencies.
-    // Having consistent versions between modules can avoid conflicts with behavior.
-    supportLibVersion = "29.0.2"
- }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+apply plugin: 'com.google.gms.google-services'
